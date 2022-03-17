@@ -1,0 +1,44 @@
+# Composition for starting services in development and CI
+
+version: '3.8'
+services:
+  app:
+    build: .
+    image: wiremock-poc-app:latest
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - service_net
+    profiles:
+      - app
+  
+  app-test:
+    build: .
+    image: wiremock-poc-app:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - wiremock-prismic
+    env_file:
+      - .api-testing.env
+    networks:
+      - service_net
+    profiles:
+      - api-testing
+  
+  wiremock-prismic:
+    image: wiremock/wiremock:2.32.0-1
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+    networks:
+      - service_net
+    profiles:
+      - api-testing
+
+networks:
+  service_net:
+    driver: bridge
