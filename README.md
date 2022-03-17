@@ -40,15 +40,8 @@ docker compose --profile api-testing up --build
 `app-test` runs the same image as `app` but has different environment variables and dependencies defined as the main app.
 
 2. Now try running the Postman collection tests. Tests will be run when a single request is fired off from Postman too.
-
-Looking at the console output:
-
-```console
-postman-wiremock-wiremock-1  | 2022-03-17 09:40:46.818 No response could be served as there are no stub mappings in this WireMock instance.
-postman-wiremock-app-test-1  | Request failed with status code 404
-```
-
-We can see that the request to the wiremock API failed because the stub doesn't exist. So, we need to define the stub.
+We can see that the request to the wiremock API failed because the stub doesn't exist.
+So, we need to define the stub.
 
 3. You could write these stubs manually (see [here](https://wiremock.org/docs/stubbing/)), but wiremock has a neat feature where you can record requests and auto generate the stubs ([docs](https://wiremock.org/docs/record-playback/)).
 
