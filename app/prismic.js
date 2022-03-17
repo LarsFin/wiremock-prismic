@@ -10,16 +10,13 @@ const getMasterRef = (prismicConfig) => {
     })
     .then(res => {
         for (const refData of res.data.refs) {
-            if (refData.id === 'master') {
+            if (refData.isMasterRef) {
                 return refData.ref;
             }
         }
 
         throw new Error('could not find ref for master');
-    })
-    .catch(err => {
-        return { status: 500, err };
-    })
+    });
 }
 
 const getDocument = (prismicConfig, uid) => {
